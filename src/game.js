@@ -54,6 +54,7 @@ class Game {
     });
   }
 
+
   static endGame() {
     $.ajax({
       type: "DELETE",
