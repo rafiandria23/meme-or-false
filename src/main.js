@@ -3,8 +3,12 @@ class Play {
     $('#trivia').empty()
     $.ajax({
       type: "GET",
+      headers: {
+        token: localStorage.accessToken
+      },
       url: "http://localhost:3000/trivia/",
       success: function (result) {
+        console.log(result, '<<<<<')
         let i = Math.floor(Math.random() * result.length);
         let trivia = result[i]
 
@@ -20,9 +24,12 @@ class Play {
   static translateQuestion(trivia) {
     $.ajax({
       type: "POST",
+      headers: {
+        token: localStorage.accessToken
+      },
       url: "http://localhost:3000/yandex/",
       data: {
-        question: trivia.question
+        question: trivia.question,
       },
       success: function (question) {
         $('#trivia').append(Play.templateQuestion(question.result, trivia.correct_answer))
