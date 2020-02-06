@@ -1,12 +1,39 @@
+// Ini rencananya udah sama translate yandexnya
+// function getQuestions() {
+//   let question;
+//   $.ajax({
+//     type: "GET",
+//     url: "http://localhost:3000/trivia/",
+//     success: function (result) {
+//       let i = Math.floor(Math.random() * result.length);
+//       question = result[i].question;
+//       $.ajax({
+//         type: "POST",
+//         url: "http://localhost:3000/yandex/",
+//         data: {
+//           question: question
+//         },
+//         success: function (response) {
+//           console.log(response);
+//           $("#question").html(response.result);
+//           // append ke target tag nya
+//         }
+//       });
+//     },
+//     error: function (err) {
+//       console.log(err);
+//     }
+//   });
+// }
+
 let showQuestion = $('#trivia')
 function getQuestion() {
   showQuestion.empty()
   $.ajax({
     method: 'GET',
     url: `http://localhost:3000/trivia`,
-    success: function (response) {
+    success: function(response) {
       let i = Math.floor(Math.random() * 10)
-      showQuestion.append(templateQuestion(response[i]))
     }
   })
 }
@@ -14,7 +41,6 @@ function getQuestion() {
 getQuestion()
 
 function templateQuestion(question) {
-
   let template = `
       <div class="card" style="width: 50rem;>
         <div class="card-body">
@@ -31,7 +57,7 @@ function templateQuestion(question) {
 }
 
 function checkAnswer(userAnswer, correctAnswer) {
-  correctAnswer = correctAnswer == 'True' ? true : false;
+  correctAnswer = correctAnswer == 'True' ? true : false
   if (userAnswer == correctAnswer) {
     console.log('benar')
     console.log(userAnswer, correctAnswer)
