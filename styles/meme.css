@@ -1,0 +1,15 @@
+/* Meme */
+
+#meme {
+  background-image: url('https://images.pexels.com/photos/1550564/pexels-photo-1550564.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* display: none; */
+}
+
+.button {
+  border-radius: 10rem;
+}
+
+/* End Of meme */
