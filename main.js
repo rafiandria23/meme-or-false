@@ -5,41 +5,39 @@ function getQuestion() {
     method: 'GET',
     url: `http://localhost:3000/trivia`,
     success: function (response) {
-      // console.log(response[1])
       let i = Math.floor(Math.random() * 10)
-      showQuestion.append(showTemplate(response[i]))
+      showQuestion.append(templateQuestion(response[i]))
     }
   })
 }
 
 getQuestion()
 
-function showTemplate(question) {
+function templateQuestion(question) {
 
   let template = `
-  <div class="card" style="width: 50rem;>
-      <div class="card-body">
+      <div class="card" style="width: 50rem;>
+        <div class="card-body">
         <h5 class="card-title">Question #1</h5>
         <div class="putQuestion">
           <p class="card-text" id="question">${question.question}</p>
         </div>
-        <input class="btn btn-primary" type="button" value="True" onclick="cekJawaban(true, '${question.correct_answer}')">
-          <input class="btn btn-primary" type="button" value="False" onclick="cekJawaban(false, '${question.correct_answer}')">
+        <input class="btn btn-primary" type="button" value="True" onclick="checkAnswer(true, '${question.correct_answer}')">
+          <input class="btn btn-primary" type="button" value="False" onclick="checkAnswer(false, '${question.correct_answer}')">
         </div>
       </div>`
 
   return template
 }
 
-function cekJawaban(answer, correct) {
-  // console.log(answer, correct)
-  correct = correct == 'True' ? true : false;
-  if (answer == correct) {
+function checkAnswer(userAnswer, correctAnswer) {
+  correctAnswer = correctAnswer == 'True' ? true : false;
+  if (userAnswer == correctAnswer) {
     console.log('benar')
-    console.log(answer, correct)
+    console.log(userAnswer, correctAnswer)
   } else {
     console.log('salah')
-    console.log(answer, correct)
+    console.log(userAnswer, correctAnswer)
     getQuestion()
   }
 }
