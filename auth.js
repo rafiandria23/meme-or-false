@@ -43,6 +43,7 @@ $start.on('click', function (e) {
 function userLoggedIn() {
     $landingPage.fadeOut(500, function () {
         $landingPage.hide()
+        $quizPage.hide()
         $mainPage.fadeIn(500, function () {
             $mainPage.show()
             $email.text(`Welcome, ${localStorage.getItem('email')}`)
@@ -53,6 +54,7 @@ function userLoggedIn() {
 function userLoggedOut() {
     $mainPage.fadeOut(500, function () {
         $mainPage.hide()
+        $quizPage.hide()
         $landingPage.fadeIn(500, function () {
             $landingPage.show()
         })
