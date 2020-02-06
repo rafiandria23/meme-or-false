@@ -60,13 +60,17 @@ class Play {
   static checkAnswer(userAnswer, correctAnswer) {
     correctAnswer = correctAnswer == 'True' ? true : false
     if (userAnswer == correctAnswer) {
+      Game.updateScore()
       console.log('benar')
       console.log(userAnswer, correctAnswer)
     } else {
+      Game.updateHighestScore()
       console.log('salah')
       console.log(userAnswer, correctAnswer)
-      Play.getQuestions()
+      Game.endGame()
+      // Play.getQuestions()
     }
   }
+
 
 }
