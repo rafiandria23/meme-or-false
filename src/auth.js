@@ -30,6 +30,7 @@ function signOut() {
 }
 
 function userLoggedIn() {
+  getScore()
   $landingPage.fadeOut(500, function () {
     $mainPage.show(500, function () {
       $email.text(`Welcome, ${localStorage.getItem('email')}`)
@@ -43,6 +44,7 @@ function userLoggedOut() {
 }
 
 function getScore() {
+  $('#score_board').empty();
   $.ajax({
     type: "get",
     url: "http://localhost:3000/highest-score",
@@ -55,7 +57,7 @@ function getScore() {
           `<tr>
       <th scope="row">${i + 1}</th>
       <td>${score.email}</td>
-      <td>${!score.score && 0}</td>
+      <td>${score.score}</td>
       </tr>`
         );
       });
@@ -67,7 +69,6 @@ function getScore() {
 }
 
 if (localStorage.getItem('accessToken')) {
-  getScore()
   userLoggedIn()
 } else {
   userLoggedOut()

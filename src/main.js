@@ -9,7 +9,7 @@ $start.on('click', function (e) {
     $mainPage.hide()
     getQuestion()
     Game.startGame()
-    $quizPage.fadeIn(500, function() {
+    $quizPage.fadeIn(500, function () {
       showQuestion()
     })
   })
@@ -27,7 +27,7 @@ function getQuestion() {
     headers: {
       token: localStorage.accessToken
     },
-    success: function(questions) {
+    success: function (questions) {
       let i = Math.floor(Math.random() * 10)
       let randomQuestion = questions[i]
       $.ajax({
@@ -63,6 +63,8 @@ function showQuestion() {
   $quizPage.fadeIn(500)
 }
 
+var score = 0
+
 function templateQuestion(question) {
   let template = `
       <div class="hero__overlay" style="background-color: blue;"></div>
@@ -70,7 +72,8 @@ function templateQuestion(question) {
       <div class="hero__inner">
         <div class="container">
         <button class="button button__delete" id="end_game">Selesai</button>
-          <div class="hero__content">
+        <div class="hero__content d-flex flex-column">
+        <h1 class="button button__accent" style="font-size : xx-large;" id="score">Score : ${score}</h1>
             <div class="card" style="width: 50em; padding-bottom: 2em; background-color: rgba(3, 0, 0, 0.418);">
               <div class="container text-center">
                 <h2 class="text-center text-white">Question</h2>
@@ -94,9 +97,10 @@ function checkAnswer(userAnswer, correctAnswer) {
     // kalo bener tampilin meme nya
     Meme.getMeme()
     $quizPage.fadeOut(500, function () {
+      score += 100
       $quizPage.hide()
       Game.updateScore()
-      $meme.fadeIn(500, function() {
+      $meme.fadeIn(500, function () {
         $meme.fadeIn(500)
       })
     })
@@ -105,9 +109,11 @@ function checkAnswer(userAnswer, correctAnswer) {
     // console.log(userAnswer, correctAnswer)
     Game.updateHighestScore()
     Game.endGame()
-    $quizPage.fadeOut(500, function() {
+    score = 0
+    $quizPage.fadeOut(500, function () {
       $quizPage.hide()
-      $mainPage.show(500, function() {
+      $mainPage.show(500, function () {
+        getScore()
         $email.text(`Welcome, ${localStorage.getItem('email')}`)
       })
     })
