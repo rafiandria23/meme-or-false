@@ -32,7 +32,7 @@ function getQuestion() {
   $.ajax({
     method: 'GET',
     url: `http://localhost:3000/trivia`,
-    success: function(response) {
+    success: function (response) {
       let i = Math.floor(Math.random() * 10)
     }
   })
@@ -56,14 +56,24 @@ function templateQuestion(question) {
   return template
 }
 
-function checkAnswer(userAnswer, correctAnswer) {
+function checkAnswer(userAnswer, correctAnswer = "True") {
   correctAnswer = correctAnswer == 'True' ? true : false
   if (userAnswer == correctAnswer) {
     console.log('benar')
     console.log(userAnswer, correctAnswer)
+    showMeme()
   } else {
     console.log('salah')
     console.log(userAnswer, correctAnswer)
-    getQuestion()
+    // getQuestion()
   }
+}
+
+function showMeme() {
+  $('#meme').show();
+  $('#quiz_page').hide();
+  setTimeout(() => {
+    $('#meme').hide();
+    $('#quiz_page').show();
+  }, 2000);
 }

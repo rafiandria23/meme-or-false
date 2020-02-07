@@ -29,6 +29,8 @@ var $mainPage = $('#main_page')
 var $start = $('#start')
 var $quizPage = $('#quiz_page')
 var $email = $('#email')
+var $meme = $('#meme')
+$meme.hide()
 
 $start.on('click', function (e) {
     e.preventDefault()
