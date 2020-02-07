@@ -3,6 +3,9 @@ class Meme {
     $.ajax({
       type: 'GET',
       url: 'http://localhost:3000/memes/',
+      headers: {
+        token: localStorage.accessToken
+      },
       success: function(meme) {
         $('#meme-vid').empty()
         let content = `
