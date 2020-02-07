@@ -18,25 +18,31 @@
 var $start = $('#start')
 var $quizPage = $('#quiz_page')
 var $meme = $('#meme')
-
 // Button start buat mulai game
-$start.on('click', function(e) {
+$start.on('click', function (e) {
   e.preventDefault()
-  $mainPage.fadeOut(500, function() {
+  $mainPage.fadeOut(500, function () {
     $mainPage.hide()
     getQuestion()
-    $quizPage.fadeIn(500, function() {
+    $quizPage.fadeIn(500, function () {
       showQuestion()
     })
   })
 })
+
+$(document).on('click', '#end_game', function () {
+  userLoggedIn()
+});
 
 function getQuestion() {
   $quizPage.empty()
   $.ajax({
     method: 'GET',
     url: `http://localhost:3000/trivia`,
-    success: function(questions) {
+    headers: {
+      token: localStorage.accessToken
+    },
+    success: function (questions) {
       let i = Math.floor(Math.random() * 10)
       let randomQuestion = questions[i]
       $.ajax({
@@ -48,18 +54,18 @@ function getQuestion() {
         headers: {
           token: localStorage.accessToken
         },
-        success: function(response) {
+        success: function (response) {
           randomQuestion.question = response.result
           console.log(randomQuestion)
           $quizPage.append(templateQuestion(randomQuestion))
         },
-        error: function(err) {
+        error: function (err) {
           console.log(err)
         }
       })
       showQuestion()
     },
-    error: function(err) {
+    error: function (err) {
       console.log(err)
     }
   })
@@ -75,6 +81,7 @@ function templateQuestion(question) {
       <div class="hero__mask"></div>
       <div class="hero__inner">
         <div class="container">
+        <button class="button button__delete" id="end_game">Selesai</button>
           <div class="hero__content">
             <div class="card" style="width: 50em; padding-bottom: 2em; background-color: rgba(3, 0, 0, 0.418);">
               <div class="container text-center">
@@ -86,11 +93,10 @@ function templateQuestion(question) {
                 <button class="button button__delete" id="false" onclick="checkAnswer(false, '${question.correct_answer}')">Salah</button>
               </div>
             </div>
-          </div>
+            </div>
         </div>
       </div>
       `
-
   return template
 }
 
@@ -99,9 +105,9 @@ function checkAnswer(userAnswer, correctAnswer) {
   if (userAnswer == correctAnswer) {
     // kalo bener tampilin meme nya
     Meme.getMeme()
-    $quizPage.fadeOut(500, function() {
+    $quizPage.fadeOut(500, function () {
       $quizPage.hide()
-      $meme.fadeIn(500, function() {
+      $meme.fadeIn(500, function () {
         $meme.fadeIn(500)
       })
     })

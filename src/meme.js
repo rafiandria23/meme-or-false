@@ -3,7 +3,10 @@ class Meme {
     $.ajax({
       type: 'GET',
       url: 'http://localhost:3000/memes/',
-      success: function(meme) {
+      headers: {
+        token: localStorage.accessToken
+      },
+      success: function (meme) {
         $('#meme-vid').empty()
         let content = `
           <figure class="d-flex justify-content-center">
@@ -22,7 +25,7 @@ class Meme {
         `
         $('#meme-vid').append(content)
       },
-      error: function(err) {
+      error: function (err) {
         console.log(err)
       }
     })
@@ -30,11 +33,11 @@ class Meme {
 
   static mainLagi(event) {
     event.preventDefault()
-    $('#meme').fadeOut(500, function() {
+    $('#meme').fadeOut(500, function () {
       $('#meme').hide()
       $('#meme-vid').empty()
       getQuestion()
-      $('#quiz_page').fadeIn(500, function() {
+      $('#quiz_page').fadeIn(500, function () {
         showQuestion()
       })
     })
