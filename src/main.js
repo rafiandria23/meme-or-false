@@ -7,18 +7,7 @@
 //     success: function (result) {
 //       let i = Math.floor(Math.random() * result.length);
 //       question = result[i].question;
-//       $.ajax({
-//         type: "POST",
-//         url: "http://localhost:3000/yandex/",
-//         data: {
-//           question: question
-//         },
-//         success: function (response) {
-//           console.log(response);
-//           $("#question").html(response.result);
-//           // append ke target tag nya
-//         }
-//       });
+//
 //     },
 //     error: function (err) {
 //       console.log(err);
@@ -26,32 +15,78 @@
 //   });
 // }
 
-let showQuestion = $('#trivia')
+var $start = $('#start')
+var $quizPage = $('#quiz_page')
+var $meme = $('#meme')
+
+// Button start buat mulai game
+$start.on('click', function(e) {
+  e.preventDefault()
+  $mainPage.fadeOut(500, function() {
+    $mainPage.hide()
+    getQuestion()
+    $quizPage.fadeIn(500, function() {
+      showQuestion()
+    })
+  })
+})
+
 function getQuestion() {
-  showQuestion.empty()
+  $quizPage.empty()
   $.ajax({
     method: 'GET',
     url: `http://localhost:3000/trivia`,
-    success: function(response) {
+    success: function(questions) {
       let i = Math.floor(Math.random() * 10)
+      let randomQuestion = questions[i]
+      $.ajax({
+        type: 'POST',
+        url: 'http://localhost:3000/yandex/',
+        data: {
+          question: randomQuestion.question
+        },
+        success: function(response) {
+          randomQuestion.question = response.result
+          console.log(randomQuestion)
+          $quizPage.append(templateQuestion(randomQuestion))
+        },
+        error: function(err) {
+          console.log(err)
+        }
+      })
+      showQuestion()
+    },
+    error: function(err) {
+      console.log(err)
     }
   })
 }
 
-getQuestion()
+function showQuestion() {
+  $quizPage.fadeIn(500)
+}
 
 function templateQuestion(question) {
   let template = `
-      <div class="card" style="width: 50rem;>
-        <div class="card-body">
-        <h5 class="card-title">Question #1</h5>
-        <div class="putQuestion">
-          <p class="card-text" id="question">${question.question}</p>
+      <div class="hero__overlay" style="background-color: blue;"></div>
+      <div class="hero__mask"></div>
+      <div class="hero__inner">
+        <div class="container">
+          <div class="hero__content">
+            <div class="card" style="width: 50em; padding-bottom: 2em; background-color: rgba(3, 0, 0, 0.418);">
+              <div class="container text-center">
+                <h2 class="text-center text-white">Question</h2>
+                <p class="card-subtitle mb-2 text-white" style="font-size: 24px;">
+                  ${question.question}
+                </p>
+                <button class="button button__accent" id="true" onclick="checkAnswer(true, '${question.correct_answer}')">Benar</button>
+                <button class="button button__delete" id="false" onclick="checkAnswer(false, '${question.correct_answer}')">Salah</button>
+              </div>
+            </div>
+          </div>
         </div>
-        <input class="btn btn-primary" type="button" value="True" onclick="checkAnswer(true, '${question.correct_answer}')">
-          <input class="btn btn-primary" type="button" value="False" onclick="checkAnswer(false, '${question.correct_answer}')">
-        </div>
-      </div>`
+      </div>
+      `
 
   return template
 }
@@ -59,11 +94,17 @@ function templateQuestion(question) {
 function checkAnswer(userAnswer, correctAnswer) {
   correctAnswer = correctAnswer == 'True' ? true : false
   if (userAnswer == correctAnswer) {
-    console.log('benar')
-    console.log(userAnswer, correctAnswer)
+    // kalo bener tampilin meme nya
+    Meme.getMeme()
+    $quizPage.fadeOut(500, function() {
+      $quizPage.hide()
+      $meme.fadeIn(500, function() {
+        $meme.fadeIn(500)
+      })
+    })
   } else {
-    console.log('salah')
-    console.log(userAnswer, correctAnswer)
+    // console.log('salah')
+    // console.log(userAnswer, correctAnswer)
     getQuestion()
   }
 }
