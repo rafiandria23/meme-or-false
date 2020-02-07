@@ -1,117 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <meta
-      name="google-signin-client_id"
-      content="579477767948-uipq6lvsfojp8ma2prandg8dmp3o0jlf.apps.googleusercontent.com"
-    />
+    <meta name="google-signin-client_id"
+        content="579477767948-uipq6lvsfojp8ma2prandg8dmp3o0jlf.apps.googleusercontent.com" />
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-      crossorigin="anonymous"
-    />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
     <link rel="stylesheet" href="styles/style.css" />
     <link rel="stylesheet" href="styles/meme.css" />
     <link rel="stylesheet" href="styles/background.css" />
 
     <title>Meme Or False</title>
-  </head>
+</head>
 
-  <body>
+<body>
     <div class="auth" id="landing_page" style="display: none;">
-      <div class="container">
-        <div
-          class="card"
-          style="max-width: 80%; padding: 5rem; background-color: rgba(0, 0, 0, 0.479);"
-        >
-          <div class="card-header">
-            <h1
-              class="text-white"
-              style="font-weight: bolder; font-size: 48px;"
-            >
-              Meme Or False
-            </h1>
-          </div>
-          <div class="card-body">
-            <h3 class="text-white" style="font-weight: bolder;">
-              Login Disini
-            </h3>
-            <div class="g-signin2" data-onsuccess="onSignIn"></div>
-          </div>
+        <div class="container">
+            <div class="card" style="max-width: 80%; padding: 5rem; background-color: rgba(0, 0, 0, 0.479);">
+                <div class="card-header">
+                    <h1 class="text-white" style="font-weight: bolder; font-size: 48px;">
+                        Meme Or False
+                    </h1>
+                </div>
+                <div class="card-body">
+                    <h3 class="text-white" style="font-weight: bolder;">
+                        Login Disini
+                    </h3>
+                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                </div>
+            </div>
+            <div class="auth__inner">
+                <div class="auth__auth"></div>
+            </div>
         </div>
-        <div class="auth__inner">
-          <div class="auth__auth"></div>
-        </div>
-      </div>
     </div>
 
     <div class="hero" id="main_page" style="display:none; height: 100vh;">
-      <div class="hero__overlay"></div>
-      <div class="hero__mask"></div>
-      <div class="hero__inner">
-        <div class="container">
-          <div class="hero__content">
-            <div class="hero__content__inner" id="navConverter">
-              <h1 class="hero__title" id="email">Welcome, example@mail.com</h1>
-              <br />
-              <button class="button button__accent" id="start">Mulai</button>
-              <button class="button button__delete" onclick="signOut()">
-                Keluar
-              </button>
+        <div class="hero__overlay"></div>
+        <div class="hero__mask"></div>
+        <div class="hero__inner">
+            <div class="container">
+                <div class="hero__content">
+                    <div class="hero__content__inner" id="navConverter">
+                        <h1 class="hero__title" id="email"></h1>
+                        <br />
+                        <button class="button button__accent" id="start">Mulai</button>
+                        <button class="button button__delete" onclick="signOut()">
+                            Keluar
+                        </button>
+                        <h2 style="margin: 24px; color: white; font-weight: bolder;">Score Board</h2>
+                        <table class="table table-dark">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Score</th>
+                                </tr>
+                            </thead>
+                            <tbody id="score_board">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
 
     <!-- Template quiz -->
-    <div
-      class="hero"
-      id="quiz_page"
-      style="display: none; height: 100vh;"
-    ></div>
+    <div class="hero" id="quiz_page" style="display: none; height: 100vh;"></div>
 
     <div id="meme" style="display: none; height: 100vh;">
-      <!-- <button class="button button__accent" onclick="Meme.getMeme()">
+        <!-- <button class="button button__accent" onclick="Meme.getMeme()">
         get meme
       </button> -->
-      <div class="hero__overlay"></div>
-      <div class="hero__mask"></div>
-      <div class="hero__inner">
-        <div class="container">
-          <div class="hero__content">
-            <div
-              class="card"
-              style="width: 50em; padding-bottom: 2em; background-color: rgba(3, 0, 0, 0.418);"
-            >
-              <div class="container text-center pt-2" id="meme-vid"></div>
+        <div class="hero__overlay"></div>
+        <div class="hero__mask"></div>
+        <div class="hero__inner">
+            <div class="container">
+                <div class="hero__content">
+                    <div class="card" style="width: 50em; padding-bottom: 2em; background-color: rgba(3, 0, 0, 0.418);">
+                        <div class="container text-center pt-2" id="meme-vid"></div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </body>
-  <script
-    src="https://code.jquery.com/jquery-3.4.1.min.js"
-    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-    crossorigin="anonymous"
-  ></script>
-  <script
-    src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
     integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-    crossorigin="anonymous"
-  ></script>
-  <script
-    src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-    crossorigin="anonymous"
-  ></script>
-  <script src="src/meme.js"></script>
-  <script src="src/auth.js"></script>
-  <script src="src/main.js"></script>
+    crossorigin="anonymous"></script>
+<script src="src/meme.js"></script>
+<script src="src/auth.js"></script>
+<script src="src/main.js"></script>
+
 </html>

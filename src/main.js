@@ -45,6 +45,9 @@ function getQuestion() {
         data: {
           question: randomQuestion.question
         },
+        headers: {
+          token: localStorage.accessToken
+        },
         success: function(response) {
           randomQuestion.question = response.result
           console.log(randomQuestion)
