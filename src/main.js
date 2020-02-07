@@ -1,20 +1,4 @@
-// Ini rencananya udah sama translate yandexnya
-// function getQuestions() {
-//   let question;
-//   $.ajax({
-//     type: "GET",
-//     url: "http://localhost:3000/trivia/",
-//     success: function (result) {
-//       let i = Math.floor(Math.random() * result.length);
-//       question = result[i].question;
-//
-//     },
-//     error: function (err) {
-//       console.log(err);
-//     }
-//   });
-// }
-
+var $mainPage = $('#main_page')
 var $start = $('#start')
 var $quizPage = $('#quiz_page')
 var $meme = $('#meme')
@@ -25,6 +9,7 @@ $start.on('click', function(e) {
   $mainPage.fadeOut(500, function() {
     $mainPage.hide()
     getQuestion()
+    Game.startGame()
     $quizPage.fadeIn(500, function() {
       showQuestion()
     })
@@ -104,6 +89,7 @@ function checkAnswer(userAnswer, correctAnswer) {
     Meme.getMeme()
     $quizPage.fadeOut(500, function() {
       $quizPage.hide()
+      Game.updateScore()
       $meme.fadeIn(500, function() {
         $meme.fadeIn(500)
       })
@@ -111,6 +97,13 @@ function checkAnswer(userAnswer, correctAnswer) {
   } else {
     // console.log('salah')
     // console.log(userAnswer, correctAnswer)
-    getQuestion()
+    Game.updateHighestScore()
+    Game.endGame()
+    $quizPage.fadeOut(500, function() {
+      $quizPage.hide()
+      $mainPage.show(500, function() {
+        $email.text(`Welcome, ${localStorage.getItem('email')}`)
+      })
+    })
   }
 }
