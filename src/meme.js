@@ -20,7 +20,7 @@ class Meme {
           </figure>
            <div class="flex-column justify-content-center">
               <h2 class="text-center text-white font-weight-bold">Yeaay! Jawabanmu benar</h2>
-              <button class="button button__accent" onclick="Meme.mainLagi(event)">Main Lagi</button>
+              <button class="button button__accent" onclick="Meme.mainLagi(event)">Lanjutkan</button>
             </div>
         `
         $('#meme-vid').append(content)
