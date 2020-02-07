@@ -36,12 +36,18 @@ function getQuestion() {
   $.ajax({
     method: 'GET',
     url: `http://localhost:3000/trivia`,
+    headers: {
+      token: localStorage.accessToken
+    },
     success: function(questions) {
       let i = Math.floor(Math.random() * 10)
       let randomQuestion = questions[i]
       $.ajax({
         type: 'POST',
         url: 'http://localhost:3000/yandex/',
+        headers: {
+          token: localStorage.accessToken
+        },
         data: {
           question: randomQuestion.question
         },
