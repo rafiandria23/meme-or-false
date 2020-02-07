@@ -1,20 +1,4 @@
-// Ini rencananya udah sama translate yandexnya
-// function getQuestions() {
-//   let question;
-//   $.ajax({
-//     type: "GET",
-//     url: "http://localhost:3000/trivia/",
-//     success: function (result) {
-//       let i = Math.floor(Math.random() * result.length);
-//       question = result[i].question;
-//
-//     },
-//     error: function (err) {
-//       console.log(err);
-//     }
-//   });
-// }
-
+var $mainPage = $('#main_page')
 var $start = $('#start')
 var $quizPage = $('#quiz_page')
 var $meme = $('#meme')
@@ -24,7 +8,8 @@ $start.on('click', function (e) {
   $mainPage.fadeOut(500, function () {
     $mainPage.hide()
     getQuestion()
-    $quizPage.fadeIn(500, function () {
+    Game.startGame()
+    $quizPage.fadeIn(500, function() {
       showQuestion()
     })
   })
@@ -42,12 +27,15 @@ function getQuestion() {
     headers: {
       token: localStorage.accessToken
     },
-    success: function (questions) {
+    success: function(questions) {
       let i = Math.floor(Math.random() * 10)
       let randomQuestion = questions[i]
       $.ajax({
         type: 'POST',
         url: 'http://localhost:3000/yandex/',
+        headers: {
+          token: localStorage.accessToken
+        },
         data: {
           question: randomQuestion.question
         },
@@ -107,13 +95,21 @@ function checkAnswer(userAnswer, correctAnswer) {
     Meme.getMeme()
     $quizPage.fadeOut(500, function () {
       $quizPage.hide()
-      $meme.fadeIn(500, function () {
+      Game.updateScore()
+      $meme.fadeIn(500, function() {
         $meme.fadeIn(500)
       })
     })
   } else {
     // console.log('salah')
     // console.log(userAnswer, correctAnswer)
-    getQuestion()
+    Game.updateHighestScore()
+    Game.endGame()
+    $quizPage.fadeOut(500, function() {
+      $quizPage.hide()
+      $mainPage.show(500, function() {
+        $email.text(`Welcome, ${localStorage.getItem('email')}`)
+      })
+    })
   }
 }

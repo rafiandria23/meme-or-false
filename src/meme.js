@@ -6,7 +6,7 @@ class Meme {
       headers: {
         token: localStorage.accessToken
       },
-      success: function (meme) {
+      success: function(meme) {
         $('#meme-vid').empty()
         let content = `
           <figure class="d-flex justify-content-center">
