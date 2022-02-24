@@ -1,4 +1,4 @@
-# Meme or False API Documentation
+# Meme or False Server
 
 ## Show Memes
 
